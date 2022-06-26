@@ -5,6 +5,8 @@ For the original script, please refer to this repo: https://github.com/realpytho
 - Using requests library instead of the http.client library to be able to download specific information.
 - If the site is offline, send a continuous ping to the site until it's online and then send a notification to the user
 - Check what other ports are open on that URL other than 80 and 443
+- Test
+- Test 2
 
 # Build a Site Connectivity Checker in Python
 
