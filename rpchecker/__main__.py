@@ -15,7 +15,6 @@ def main():
     if not urls:
         print("Error: no URLs to check", file=sys.stderr)
         sys.exit(1)
-
     if user_args.asynchronous:
         asyncio.run(_asynchronous_check(urls))
     else:
@@ -42,6 +41,16 @@ def _read_urls_from_file(file):
     return []
 
 
+def _synchronous_check(urls):
+    for url in urls:
+        error = ""
+        try:
+            result = site_is_online(url)
+        except Exception as e:
+            result = False
+            error = str(e)
+        display_check_result(result, url, error)
+
 async def _asynchronous_check(urls):
     async def _check(url):
         error = ""
@@ -53,18 +62,6 @@ async def _asynchronous_check(urls):
         display_check_result(result, url, error)
 
     await asyncio.gather(*(_check(url) for url in urls))
-
-
-def _synchronous_check(urls):
-    for url in urls:
-        error = ""
-        try:
-            result = site_is_online(url)
-        except Exception as e:
-            result = False
-            error = str(e)
-        display_check_result(result, url, error)
-
 
 if __name__ == "__main__":
     main()
